@@ -118,15 +118,15 @@ let textNodes = textNode(document.body);
 for (node of textNodes) {
   let originalText = node.nodeValue;
   let text = originalText;
+
   for (wordToReplace in wordDictionary) {
     let wordReplace = new RegExp("\\b(" + wordToReplace + ")\\b", "ig");
     let replacement = wordDictionary[wordToReplace]
     let replacedText = text.replace(wordReplace, replacement);
 
-    if (replacedText !== text && node.parentNode !== null) {
-      text = replacedText;
-    }
+    if (replacedText !== text && node.parentNode !== null) text = replacedText;
   }
+
   if (text != originalText && node.parentNode !== null) {
     let element = document.createElement("span");
     element.innerHTML = text;
