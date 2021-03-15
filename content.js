@@ -1,4 +1,8 @@
-const wordDictionary = {
+document.addEventListener('DOMContentLoaded', fireContentLoadedEvent, false);
+
+function fireContentLoadedEvent () {
+
+  const wordDictionary = {
     "Técnico" : "Técnica",
     "Planejador" : "Planejadora",
     "Tapeceiro" : "Tapeceira",
@@ -102,34 +106,39 @@ const wordDictionary = {
     "Matemático" : "Matemática",
     "Publicitário" : "Publicitária",
     "Tecnólogo" : "Tecnóloga"
-};
+  };
 
-function textNode(node) {
-  let allWords = [];
-  for (node = node.firstChild; node; node = node.nextSibling) {
-    if (node.nodeType == 3) allWords.push(node);
-    else allWords = allWords.concat(textNode(node));
+  function textNode(node) {
+    let allWords = [];
+    for (node = node.firstChild; node; node = node.nextSibling) {
+      if (node.nodeType == 3) allWords.push(node);
+      else allWords = allWords.concat(textNode(node));
+    }
+    return allWords;
   }
-  return allWords;
+
+  let textNodes = textNode(document.body);
+
+  for (node of textNodes) {
+    let originalText = node.nodeValue;
+    let text = originalText;
+    for (wordToReplace in wordDictionary) {
+      let wordReplace = new RegExp("\\b(" + wordToReplace + ")\\b", "ig");
+      let replacement = wordDictionary[wordToReplace]
+      let replacedText = text.replace(wordReplace, replacement);
+
+      if (replacedText !== text && node.parentNode !== null) {
+        text = replacedText;
+      }
+    }
+    if (text != originalText && node.parentNode !== null) {
+      let element = document.createElement("span");
+      element.innerHTML = text;
+      node.parentNode.replaceChild(element, node);
+    }
+  }
 }
 
-let textNodes = textNode(document.body);
 
-for (node of textNodes) {
-  let originalText = node.nodeValue;
-  let text = originalText;
 
-  for (wordToReplace in wordDictionary) {
-    let wordReplace = new RegExp("\\b(" + wordToReplace + ")\\b", "ig");
-    let replacement = wordDictionary[wordToReplace]
-    let replacedText = text.replace(wordReplace, replacement);
 
-    if (replacedText !== text && node.parentNode !== null) text = replacedText;
-  }
-
-  if (text != originalText && node.parentNode !== null) {
-    let element = document.createElement("span");
-    element.innerHTML = text;
-    node.parentNode.replaceChild(element, node);
-  }
-}
