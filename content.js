@@ -226,9 +226,9 @@ for (node of textNodes) {
   let originalText = node.nodeValue;
   let text = originalText;
   for (wordToReplace in wordDictionary) {
-    let wordReplace = new RegExp("\\b(" + wordToReplace + ")\\b", "ig");
-    let replacement = wordDictionary[wordToReplace]
-    let replacedText = text.replace(wordReplace, replacement);
+    let maleWords = new RegExp("\\b(" + wordToReplace + ")\\b", "ig");
+    let femaleWords = wordDictionary[wordToReplace]
+    let replacedText = text.replace(maleWords, femaleWords);
 
     if (replacedText !== text && node.parentNode !== null) {
       text = replacedText;
