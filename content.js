@@ -104,6 +104,7 @@ const wordDictionary = {
   "um tecnólogo" : "uma tecnóloga",
   "um agrônomo" : "uma agrônoma",
   "um boy" : "uma girl",
+  "um examinador" : "uma examinadora",
   "Técnico" : "Técnica",
   "Planejador" : "Planejadora",
   "Tapeceiro" : "Tapeceira",
@@ -208,7 +209,8 @@ const wordDictionary = {
   "Publicitário" : "Publicitária",
   "Tecnólogo" : "Tecnóloga",
   "Agrônomo" : "Agrônoma",
-  "Boy" : "Girl"
+  "Boy" : "Girl",
+  "Examinador" :  "Examinadora"
 };
 
 function textNodesReplacer(node) {
@@ -240,7 +242,3 @@ for (node of textNodes) {
     node.parentNode.replaceChild(element, node);
   }
 }
-
-
-
-
